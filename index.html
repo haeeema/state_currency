@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById("root");
+    function WonToDollar() {
+      const [amount, setAmount] = React.useState("");
+      const [wonSelected, setWonSelected] = React.useState(true);
+      const [dollarSelected, setDollarSelected] = React.useState(true);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => setAmount("");
+      const onClickWon = () => {
+        setWonSelected(true);
+        setDollarSelected(false);
+        reset();
+      };
+      const onClickDollar = () => {
+        setWonSelected(false);
+        setDollarSelected(true);
+        reset();
+      };
+      return (
+        <div>
+          <h3>KRW to USD</h3>
+          <div onClick={onClickWon}>
+            <label htmlFor="won">KRW</label>
+            <input
+              value={wonSelected ? amount : Math.round(amount / 0.00077)}
+              id="won"
+              type="number"
+              placeholder="₩"
+              disabled={!wonSelected}
+              onChange={onChange}
+            />
+          </div>
+          <div onClick={onClickDollar}>
+            <label htmlFor="dollar">USD</label>
+            <input
+              value={dollarSelected ? amount : (amount * 0.00077).toFixed(2)}
+              id="dollar"
+              type="number"
+              placeholder="$"
+              disabled={!dollarSelected}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+      );
+    }
+    function WonToYen() {
+      const [amount, setAmount] = React.useState("");
+      const [wonSelected, setWonSelected] = React.useState(true);
+      const [yenSelected, setYenSelected] = React.useState(true);
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+      const reset = () => setAmount("");
+      const onClickWon = () => {
+        setWonSelected(true);
+        setYenSelected(false);
+        reset();
+      };
+      const onClickYen = () => {
+        setWonSelected(false);
+        setYenSelected(true);
+        reset();
+      };
+      return (
+        <div>
+          <h3>KRW to JPY</h3>
+          <div onClick={onClickWon}>
+            <label htmlFor="won">KRW</label>
+            <input
+              value={wonSelected ? amount : Math.round(amount * 9.55)}
+              id="won"
+              type="number"
+              placeholder="₩"
+              disabled={!wonSelected}
+              onChange={onChange}
+            />
+          </div>
+          <div onClick={onClickYen}>
+            <label htmlFor="yen">JPY</label>
+            <input
+              value={yenSelected ? amount : Math.round(amount / 9.55)}
+              id="yen"
+              type="number"
+              placeholder="¥"
+              disabled={!yenSelected}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+      );
+    }
+    function App() {
+      const [index, setIndex] = React.useState("xx");
+      const onSelect = (event) => {
+        setIndex(event.target.value);
+      };
+      return (
+        <div>
+          <select value={index} onChange={onSelect}>
+            <option value="xx">Select Currency</option>
+            <option value="0">🇺🇸 USD</option>
+            <option value="1">🇯🇵 JPY</option>
+          </select>
+          {index === "0" ? <WonToDollar /> : null}
+          {index === "1" ? <WonToYen /> : null}
+        </div>
+      );
+    }
+    ReactDOM.render(<App />, root);
+  </script>
+</html>
